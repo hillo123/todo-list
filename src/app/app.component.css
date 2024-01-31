@@ -1,0 +1,14 @@
+.title {
+  text-align: center;
+  padding-top: 5%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
+}
+.toggle {
+  display: flex;
+  justify-content: center;
+}
