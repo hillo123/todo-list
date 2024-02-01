@@ -9,6 +9,9 @@ import { PopupService } from './services/popup.service';
 })
 export class AppComponent implements OnInit {
   inputText = '';
+  tagList: string[] = ['prioritario', 'normal'];
+  tagSelected: string = 'normal';
+  invalid: boolean = true;
 
   constructor(
     public apiService: ApiService,
@@ -21,6 +24,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+  //check the length input
+  checkTaskInput() {
+    if (this.inputText.length == 0) {
+      this.invalid = true;
+    } else {
+      this.invalid = false;
+    }
+  }
   fetchData() {
     this.apiService.getAllData().subscribe({
       next: (data) => {
@@ -31,20 +42,19 @@ export class AppComponent implements OnInit {
   }
 
   deleteTaskBtn(id: number) {
-    console.log(id);
     this.apiService.deleteTask(id).subscribe({
-      next: (resp) => {
+      next: () => {
         this.fetchData();
       },
       error: (e) => console.error(e),
     });
   }
 
-  newTaskBtn(inputText: string) {
+  newTaskBtn(inputText: string, tag: string) {
     this.inputText = '';
-    console.log(inputText);
-    this.apiService.addTask(inputText).subscribe({
-      next: (resp) => {
+    this.invalid = true;
+    this.apiService.addTask(inputText, tag).subscribe({
+      next: () => {
         this.fetchData();
       },
       error: (e) => console.error(e),
