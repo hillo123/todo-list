@@ -1,0 +1,50 @@
+<div class="todo-app">
+  <h1>Lista de Tareas</h1>
+  <div class="add-task">
+    <select name="miselect" [(ngModel)]="tagSelected">
+      <option [value]="item" *ngFor="let item of tagList">{{ item }}</option>
+    </select>
+    <input
+      required
+      [(ngModel)]="inputText"
+      (ngModelChange)="checkTaskInput()"
+      type="text"
+    />
+    <button
+      [disabled]="invalid"
+      mat-raised-button
+      color="primary"
+      (click)="newTaskBtn(this.inputText, this.tagSelected)"
+    >
+      Agregar
+    </button>
+  </div>
+  <ul id="taskList"></ul>
+  <div class="validator">
+    <span> {{ this.invalid ? "escriba la tarea" : "" }} </span>
+  </div>
+  <div class="container">
+    <div>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let data of this.apiService.dataTask; let i = index"
+        >
+          {{ data.task }}
+
+          <div class="button-list">
+            <span class="tags">{{ data.tag }}</span>
+            <button (click)="deleteTaskBtn(data.id)">eliminar</button>
+            <button (click)="this.popupService.openPopup(data.id, data.task)">
+              Editar
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="this.popupService.isOpen$ | async">
+  <app-edit></app-edit>
+</div>
