@@ -11,13 +11,23 @@ import { PopupService } from 'src/app/services/popup.service';
 export class EditComponent {
   constructor(
     private apiService: ApiService,
-    public popupService: PopupService,
-    private router: Router
+    public popupService: PopupService
   ) {}
 
   newTaskEdited: string = '';
-
+  invalid: boolean = true;
+  //validate the input
+  checkTaskInput() {
+    console.log('hi');
+    if (this.newTaskEdited.length == 0) {
+      this.invalid = true;
+    } else {
+      this.invalid = false;
+    }
+  }
+  //route to edit task - apiService
   editTask() {
+    this.checkTaskInput();
     this.apiService
       .modifyTask(this.popupService.dataId, this.newTaskEdited)
       .subscribe({
