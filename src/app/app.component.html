@@ -1,24 +1,39 @@
-<h1 class="title">TODO Task</h1>
-
-<div class="container">
-  <div>
-    <ul class="list-group">
-      <li
-        class="list-group-item"
-        *ngFor="let data of this.apiService.dataTask; let i = index"
-      >
-        {{ data.task }}
-        <button (click)="deleteTaskBtn(data.id)">eliminar</button>
-        <button (click)="this.popupService.openPopup(data.id, data.task)">
-          Editar
-        </button>
-      </li>
-    </ul>
+<div class="todo-app">
+  <h1>Lista de Tareas</h1>
+  <div class="add-task">
+    <!--   <div class="toggle"> -->
+    <input [(ngModel)]="inputText" type="text" />
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="newTaskBtn(this.inputText)"
+    >
+      Agregar
+    </button>
   </div>
-</div>
-<div class="toggle">
-  <input [(ngModel)]="inputText" type="text" />
-  <button (click)="newTaskBtn(this.inputText)">Agregar</button>
+  <!--</div> -->
+  <ul id="taskList">
+    <!-- Las tareas se agregarán dinámicamente aquí -->
+  </ul>
+
+  <div class="container">
+    <div>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let data of this.apiService.dataTask; let i = index"
+        >
+          {{ data.task }}
+          <div class="button-list">
+            <button (click)="deleteTaskBtn(data.id)">eliminar</button>
+            <button (click)="this.popupService.openPopup(data.id, data.task)">
+              Editar
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="this.popupService.isOpen$ | async">
