@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -9,8 +10,12 @@ export class SigninComponent {
   email?: string;
   password?: string;
 
+  constructor(public userService: UserService) {}
+
   signInUser() {
-    console.log(this.email);
-    console.log(this.password);
+    const user = { email: this.email, password: this.password };
+    this.userService.fetchUser(user).subscribe((data) => {
+      console.log(data);
+    });
   }
 }
