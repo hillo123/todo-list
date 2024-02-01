@@ -28,9 +28,9 @@ export class ApiService {
   }
 
   // route to create new task
-  addTask(data: string) {
+  addTask(data: string, tag: string) {
     console.log(data);
-    const body = { task: data };
+    const body = { task: data, tag: tag };
     return this.http
       .post(`${this.API_MOCK_ENDPOINT}`, body)
       .pipe(catchError(this.handleError));
