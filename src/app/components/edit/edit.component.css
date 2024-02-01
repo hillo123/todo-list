@@ -8,3 +8,16 @@
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
+.container {
+  padding-top: 20%;
+  text-align: center;
+  width: 600px;
+  height: 200px;
+}
+
+.btn {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2%;
+}
