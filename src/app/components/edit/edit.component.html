@@ -1,4 +1,15 @@
-<input [(ngModel)]="newTaskEdited" type="text" />
-
-<button (click)="this.popupService.closePopup()">Cancelar</button>
-<button (click)="editTask()">Guardar</button>
+<div class="container">
+  <div>
+    <input
+      required
+      size="50"
+      [(ngModel)]="newTaskEdited"
+      (ngModelChange)="checkTaskInput()"
+      type="text"
+    />
+  </div>
+  <div class="btn">
+    <button (click)="this.popupService.closePopup()">Cancelar</button>
+    <button [disabled]="invalid" (click)="editTask()">Guardar</button>
+  </div>
+</div>
