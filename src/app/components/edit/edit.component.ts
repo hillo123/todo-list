@@ -18,7 +18,6 @@ export class EditComponent {
   invalid: boolean = true;
   //validate the input
   checkTaskInput() {
-    console.log('hi');
     if (this.newTaskEdited.length == 0) {
       this.invalid = true;
     } else {
@@ -31,8 +30,7 @@ export class EditComponent {
     this.apiService
       .modifyTask(this.popupService.dataId, this.newTaskEdited)
       .subscribe({
-        next: (resp) => {
-          console.log(resp);
+        next: () => {
           this.apiService.getAllData();
           this.popupService.closePopup();
         },

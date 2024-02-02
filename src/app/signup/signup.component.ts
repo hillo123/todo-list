@@ -12,11 +12,4 @@ export class SignupComponent {
   confirmPassword?: string;
 
   constructor(public userService: UserService) {}
-
-  signUp() {
-    const user = { email: this.email, password: this.password };
-    this.userService.addNewUser(user).subscribe((data) => {
-      console.log(data);
-    });
-  }
 }
