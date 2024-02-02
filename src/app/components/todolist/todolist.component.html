@@ -1,0 +1,108 @@
+<div class="container-edit">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.Logout()">LogOut</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="inner-adjust">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Perfil de Usuario</h1>
+          </div>
+          <div class="row" *ngIf="authService.UserData as user">
+            <div class="col-md-12">
+              <div class="media">
+                <img
+                  class="align-self-start mr-5 img-thumbnail rounded-circle"
+                  src="{{
+                    user.photoURL ? user.photoURL : '/assets/dummy-user.png'
+                  }}"
+                  alt="{{ user.displayName }}"
+                />
+                <div class="media-body">
+                  <h1>
+                    Hola!, Bienvenid@:
+                    <strong>{{
+                      user.displayName ? user.displayName : "User"
+                    }}</strong>
+                  </h1>
+                  <p>
+                    U-ID: <strong>{{ user.uid }}</strong>
+                  </p>
+                  <p>
+                    Email: <strong>{{ user.email }}</strong>
+                  </p>
+                  <p>
+                    Email Verificado: <strong>{{ user.emailVerified }}</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="todo-app">
+    <h1>Lista de Tareas</h1>
+    <div class="add-task">
+      <select name="miselect" [(ngModel)]="tagSelected">
+        <option [value]="item" *ngFor="let item of tagList">{{ item }}</option>
+      </select>
+      <!-- task input -->
+      <input
+        required
+        [(ngModel)]="inputText"
+        (ngModelChange)="checkTaskInput()"
+        type="text"
+      />
+      <button
+        [disabled]="invalid"
+        mat-raised-button
+        color="primary"
+        (click)="newTaskBtn(this.inputText, this.tagSelected)"
+      >
+        Agregar
+      </button>
+    </div>
+    <ul id="taskList"></ul>
+    <div class="validator">
+      <span> {{ this.invalid ? "escriba la tarea" : "" }} </span>
+    </div>
+    <div class="container">
+      <div>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let data of this.apiService.dataTask; let i = index"
+          >
+            {{ data.task }}
+
+            <div class="button-list">
+              <span class="tags">{{ data.tag }}</span>
+              <button (click)="deleteTaskBtn(data.id)">eliminar</button>
+              <button (click)="this.popupService.openPopup(data.id, data.task)">
+                Editar
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.popupService.isOpen$ | async">
+    <app-edit></app-edit>
+  </div>
+</div>
+<!-- todo por cambiar -->
